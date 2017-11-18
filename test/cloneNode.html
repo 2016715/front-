@@ -1,0 +1,136 @@
+<!--
+ cloneNode(true) 子节点全部复制和样式
+ cloneNode(false) 只复制父节点和样式
+ 克隆一个元素节点会拷贝它所有的属性以及属性值,当然也就包括了属性上绑定的事件(比如onclick="alert(1)"),但不会拷贝那些使用addEventListener()方法或者node.onclick = fn这种用JavaScript动态绑定的事件.
+
+添加对象时注意 事件委任的问题，如果添加的是复制的子元素手动禁止后代上的事件。
+这样做可以间接的绑定复制元素的动态事件。 
+-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	*{
+		padding: 0;
+		margin: 0;
+	}
+	.pos {
+		position: absolute;
+		top:100px;
+		left:500px;
+		width: 200px;
+		height: 200px;
+		background: orange;
+
+
+	}
+	.sup {
+		width: 50px;
+		height: 50px;
+		background: green;
+	}
+	.leftup {
+		position: absolute;
+		top:-25px;
+		left:-25px;
+		background: red;
+
+	}
+	.rightup {
+		position: absolute;
+		width: 50px;
+		height: 50px;
+		top:-25px;
+		left:25px;
+		background: black;
+	}
+	.leftdown {
+		position: absolute;
+		top:25px;
+		left:-25px;
+		background: black;
+	}
+	.rightdown {
+		position: absolute;
+		top:-25px;
+		left:25px;
+		background: black;
+	}
+	.triangle {
+		position: absolute;
+		top:100px;
+		left:20px;
+		width: 	150px;
+		height: 100px;
+		/*border-left:300px solid transparent;*/
+		/*border-right:300px solid transparent;*/
+		border-top: 150px solid #C531CD;
+		border-right: 150px solid #998490;
+		border-bottom: 150px solid magenta ;
+		border-left: 150px solid #D78282; 
+		background:purple;
+	}
+
+</style>
+</head>
+<body>
+	<div class="pos">
+		<div class="sup"></div>
+	</div>
+	<div class="triangle"></div>
+
+
+</body>
+<script>
+	window.onload = function() {
+		var sup = document.querySelector('.sup');
+
+	//方法一
+	var cln = sup.cloneNode(false);
+	console.log(cln);
+		// cln.style.backgroundColor='black';
+		cln.classList.add('leftup');
+
+
+		// var cln1 = sup.cloneNode(true);
+		// console.log(cln1);
+		//document.body.appendChild(cln);
+		sup.appendChild(cln);
+		sup.onclick = function() {
+			alert('clickme');
+			console.log(cln);
+
+		};
+		cln.onclick = function(e) {
+			e.cancelBubble=true;
+
+		};
+
+    //方法二
+    //不同的地方是否自己设置样式。样式没有关联
+    var cln1 = document.createElement('div');
+
+    cln1.classList.add('rightup');
+
+    console.log('cln',cln1);
+    sup.appendChild(cln1);
+    cln1.onclick = function(e) {
+    	e.cancelBubble=true;
+
+    };
+
+
+
+
+};
+
+
+
+
+
+</script>
+</html>

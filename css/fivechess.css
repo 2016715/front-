@@ -1,0 +1,179 @@
+*{
+	padding: 0;
+	margin: 0;
+}
+body {
+	background: purple;
+}
+.container {
+    position: absolute;
+    left: 400px;
+	width: 534px;
+	height: 534px;
+	border: 20px solid #2b2626;
+	-webkit-box-shadow: 10px 10px 5px #000;
+	box-shadow: 10px 10px 5px #000;
+}
+.row {
+	width: 480px;
+	height: 31px;
+	font-size: 0;
+	border-left:27px solid #211052;
+	border-right:27px solid #211052;
+	border-bottom: 1px solid black;
+}
+/*设置棋盘外边框*/
+/* .cell:nth-child(1) {
+	box-sizing: content-box;
+	border-left: 20px solid blue;
+	background: white;
+}
+.cell:nth-child(15) {
+	box-sizing: content-box;
+	border-right: 20px solid blue;
+}*/
+.row:first-child {
+	
+	border-top: 29px solid blue;
+    
+}
+.row:last-child {
+	
+	border-bottom: 27px solid blue;
+} 
+
+.cell {
+	position: relative;
+	width: 32px;
+	height: 32px;
+	/*background: purple;*/
+	display: inline-block;
+	border-right: 1px solid black;
+	box-sizing: border-box;
+}
+
+
+/*set chessStyle*/
+/*
+ *
+ *
+ */
+
+.chessouter {
+	/*设置层数*/
+	display: inline-block;
+	width:32px;
+	height: 32px;
+	box-sizing: border-box;
+	
+}
+
+.ch-black {
+	background: black;
+	border-radius: 16px;
+	display: inline-block;
+	width: 32px;
+	height: 32px;
+	box-sizing: border-box;
+}
+.ch-white {
+	background: white;
+	border-radius: 16px;
+	display: inline-block;
+	width: 32px;
+	height: 32px;
+	box-sizing: border-box;
+}
+
+/* chess position*/
+.leftup {
+	position: absolute;
+	top:-16px;
+	left:-16px;
+	z-index: 1000;
+		
+}
+.rightup {
+	position: absolute;
+	top:-16px;
+	left:16px;
+	z-index: 1000;
+		
+}
+.leftdown {
+	position: absolute;
+	top:16px;
+	left:-16px;	
+	z-index: 1000;
+}
+.rightdown {
+	position: absolute;
+	top:16px;
+	left:16px;
+	z-index: 1000;	
+}
+/*button*/
+
+.ahead,
+.back,
+.restart {
+	width: 100px;
+	height: 50px;
+	position: relative;
+	top:200px;
+	left:1000px;
+	background: #4e6363;
+	display: black;
+	color: white;
+	font-family: bold;
+	font-size: 1.3em;
+}
+.single {
+    width: 100px;
+	height: 50px;
+	position: relative;
+	top:200px;
+	left:-100px;
+	background: #4e6363;
+	display: black;
+	color: white;
+	font-family: bold;
+	font-size: 1.3em;
+
+}
+.double {
+    width: 100px;
+	height: 50px;
+	position: relative;
+	top:200px;
+	left:-400px;
+	background: #4e6363;
+	display: black;
+	color: white;
+	font-family: bold;
+	font-size: 1.3em;
+
+}
+
+
+.player {
+	
+	width: 100px;
+	height: 100px;
+	border-radius: 50px;
+	background: white;
+	position: absolute;
+	left: 1100px;
+	top: 63px;
+}
+
+.black {
+	background: black;
+}
+
+.white {
+	background: white;
+}
+
+
+

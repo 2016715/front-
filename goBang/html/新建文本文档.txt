@@ -55,47 +55,96 @@ cssstyle className设置位置即可。
 
 棋子添加到该cell中，开始位置与cell重叠，
 利用absolute 脱离 cell，但是希望脱离文档的chess组件能将cell作为父容器，cell设置 ps:relative 即可。
-这样absolute元素相对于cell左上角定位。
+这样absolute元素相对于cell四个角定位
 
-问题7
+问题7 
+棋子onclick问题
 
-怎样判断棋子：
-点击时clientY-offsetY = circleY
-      clientX -offsetX = circleX
-      在得到颜色
-      一个棋子就是一个对象
-      三个属性
-      x, y , color
-
+棋子被添加到cell的1/4 上，一个棋子占4个 cell的4/16 分 构成一个棋子，
+由于利用的cell.appendchild(child) 方法，所有棋子会冒泡到cell上触发onclick 事件这是不允许的。
+所有在添加一个棋子的同时cancelBabble取消冒泡事件。这样就实现了添加棋子。
 
 问题8
-怎么判断输赢：
-数组存放 圆形坐标x，y 0，1表黑白
-cell触发一次点击事件
-刷新一次数组，根据x，y 判断数组中是否5子相连
 
+数组坐标与浏览器坐标转换
+
+棋子落下得到棋子对象，在根据piece.x，piece.y添加到this.data数组 保存棋子在棋盘的位置。
+二维数组 行列有18个元素 0-17  四边设置为无穷大，1-16存放 15*15的棋盘就行，
+  得到浏览器的坐标在二维数组data中要在x,y上加一个单位，同时关于y= x 对称 存放的位置如下：      
+  var piece = new Piece(
+        chessY + 1,
+        chessX + 1,
+        this.currentPlayer,
+        chessouter,
+        target
+    );
+这样就 同步到与row col 来定位棋子。
+
+问题 9
+var piece = this.addchess(target, this.currentPlayer, position);
+    //addchess处理后，现在 x,y 是this.data行列
+    this.data[piece.x][piece.y] = this.currentPlayer;
+    this.gameOver = this.judge(piece.x, piece.y, piece.player);
+    
+    
 问题9
-赢的情况：
 
-1 最高优先级：x,y棋子的8方向的最后一个是否同色，
-  因为有边界干扰
- value 0:没越界 ，没棋子
- value 1:黑子
- value 2:白色
-2 x-4>=0 value=0,1,2 深度优先搜索 和 x,y相比较
-   4 1 4 
-3 5子成串算赢
+怎样判断 输赢
 
-方法二
-前面 8步都不算不会有输赢
+Game.prototype.judge = function(row, col, color) 
+判断的要点就是从中心向四周发散,遇见color不等 退出
+不在有数组越界问题。最后结果有一个方向5子结束游戏
+否则turn player
+
+补充问题10
+棋子为什么存放自己的DOM和父节点：
+
+      在得到颜色
+      一个棋子就是一个对象
+     Piece(x, y, player, selfObj, parent)
+     保存棋子的DOM对象 还有保存他的parent节点，
+     因为在悔棋后piecesArr从棋子出栈到backandaheadArr中，而在backandahead中的棋子脱离了document
+     父DOM为null ，在点击撤销需要得到棋子与父元素的联系所有需要保存父节点。
+
+
+
 
 debug 问题：
 错误：
 if(a=3)是可以通过jslint的 在查错时要注意
 正确： if(a === 3)
 
-AI下棋位置
+人机模式
+boolean 绑定触发 人机模式
+
+问题 11
+怎么处理AI下棋问题
+
+利用打分机制，白棋落盘没赢，轮到AI下棋 遍历整个this.data 中为0的位置，
+计算白胜利的分数最大值，在计算AI黑子的分数最大值，如果AI分数>=人分数（白）攻 下黑最大位置 否则 守 下白子最大位置。
+
+问题12
+
+分数问题：
+很明显白棋先手了有一手优先级，分不能相当，因此在分数设计的时候应该考虑的是第white分数的2,3步不应该大于black 1,2步，
+到第3步时白可能要赢了在给高分给白4，一个大概打分。
+
+问题13
+
+黑子第一步应该随机，不能打分不然总是在一个方向上。
+给1-8的随机数即可。
+
+问题 14
+AI下棋 
+根据上面判断得到 棋子的row col 
+查询cell 位置在最后一列和最后一行需要修正，和最后一个棋子进行修正。
 (0,0)  ->(14,14) leftup
 (m,15) ->(m,14)  rightup
 (15,m) ->(14,m)  leftdown
 (15,15)->(14,14) rightdown
+
+问题15
+判断是否截断
+
+判断是否截断上下 左右 ，交叉，需要都一行列这就在this.data的外围都是无穷数，因此可以判断截断，不然报1-15...undefind 的错。
+

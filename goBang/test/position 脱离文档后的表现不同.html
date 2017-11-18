@@ -1,0 +1,202 @@
+<!--
+absolute：脱离文档流后面文档流上移动拼接脱离height，参考点为浏览器0 ，0
+relative: 脱离文档流但是还是占有元素宽高位置，参考点为父左上点。 
+利用父元素relative 重置 子元素absolute的参考点
+
+利用relative可以改变层次关系
+
+脱离后
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<style>
+		*{
+		padding: 0;
+		margin: 0;
+	}
+	body {
+		font-size: 18px;
+		font-family: bold;
+	}
+
+	.out {
+		position: relative;
+		top:100px;
+		left:200px;
+		width: 250px;
+		height: 250px;
+		background: purple;
+		color:white;
+	}
+	.down {
+		width: 250px;
+		height: 250px;
+		background: blue;
+		color:white;
+		/*position: absolute;
+		 padding: 100px;
+		border:20px solid black;
+		margin:20px 20px; */
+	}
+
+
+	.outer {
+		width: 400px;
+		height: 400px;
+		background: red;
+		display: inline-block;
+
+	}
+	.inner {
+		width: 150px;
+		height: 150px;
+		background: gray;
+		display: inline-block;
+		position: relative;
+		top:-100px;
+		left:200px;
+
+	}
+	.inner2 {
+		width: 150px;
+		height: 150px;
+		background: #F0E00B;
+
+	}
+
+	.abouter {
+		width: 400px;
+		height: 400px;
+		background: blue;
+		
+	}
+	.abinner {
+
+		width: 150px;
+		height: 150px;
+		background: gray;
+		position: absolute;
+		top:1300px;
+		left:150px;
+
+	}
+	.abouter2 {
+		width: 400px;
+		height: 400px;
+		background: purple;
+		position: relative;
+		
+	}
+
+
+	.abinner2 {
+
+		width: 150px;
+		height: 150px;
+		background: gray;
+		position: absolute;
+		top:150px;
+		left:150px;
+
+	}
+	.abouter3 {
+		width: 400px;
+		height: 400px;
+		background: red;
+		position: relative;
+		
+	}
+	.abinner3 {
+
+		width: 150px;
+		height: 150px;
+		background: yellow;
+		
+
+	}
+
+	.inner3 {
+		width: 150px;
+		height: 150px;
+		background: black;
+		position: absolute ;
+		margin:0 auto;
+		color: white;
+	}
+
+	.abinner4 {
+
+		width: 300px;
+		height: 200px;
+		background: #C520D5;
+		text-align: right;
+		
+
+	}
+	</style>
+</head>
+<body>
+	<div class="down">2</div>
+	<div class="out">relative 后正常文档流不变</div>
+	<div class="down">别看我我没动</div>
+<!--  -->
+	<div class="outer">
+		<div class="inner">
+			position:relative;
+			top:-100px;
+			left:150px;
+		</div>
+		<div class="inner2">我没移动</div>
+	</div>
+<!-- absoulute脱离文档 -->
+	<div class="abouter">
+		<div class="abinner">
+			我的父元素不是relative 
+			我参照原点为body 的左上角
+			position:absolute;
+			top:1300px;
+			left:150px;
+		</div>
+	<div class="inner2">我上移了</div>
+	</div>
+
+<!-- 子元素absolute 脱离文档,父元素利用relative
+将子元素拉回到到父元素中 -->
+	<div class="abouter2">
+		<div class="abinner2">
+			我的父元素是relative我的原点是
+			我的父元素
+			position:absolute;
+			top:150px;
+			left:150px;
+		</div>
+	<div class="inner2">我上移动了</div>
+	</div>
+
+
+	<div class="abouter3">
+		<div class="abinner3">
+			
+		</div>
+	<div class="inner3">
+		我上面有元素
+		我是absolute
+		但是没有定位值
+		我是默认值
+
+	</div>
+	<div class="abinner4">
+			我上移动了
+		</div>
+	</div>
+
+
+
+
+
+
+
+</body>
+</html>

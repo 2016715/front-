@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+	*{
+		padding: 0;
+		margin: 0;
+	}
+	.cell {
+		position: relative;
+		top:100px;
+		left: 100px;
+		width: 50px;
+		height: 50px;
+		background: orange;
+		line-height: 50px;
+		text-align: center;
+		font-size: 1px;
+
+	}	
+	.outer {
+		width: 400px;
+		height: 200px;
+		background: blue;
+	}
+
+	.cell>span {
+		display:inline-block;
+		width:4px; 
+		height:4px;
+		background:white;
+		
+	}
+	
+/*棋子*/
+	.ch-black {
+		background: black;
+		border-radius: 25px;
+		width: 50px;
+		height: 50px;
+	}
+	.ch-white {
+		background: gray;
+		border-radius: 25px;
+		width: 50px;
+		height: 50px;
+
+	}
+/*棋子定位*/
+
+	.leftup {
+		position: absolute;
+		top:-25px;
+		left:-25px;
+		z-index: 1000;
+
+	}
+	.rightup {
+		position: absolute;
+		top:-25px;
+		left:25px;
+		z-index: 1000;
+	}
+	.leftdown {
+		position: absolute;
+		top:25px;
+		left:-25px;
+		z-index: 1000;
+	}
+	.rightdown {
+		position: absolute;
+		top:25px;
+		left:25px;
+		z-index: 1000;
+	}
+	/*棋子外框*/
+	.chessouter {
+		display: inline-block;
+		border:1px solid black;
+		width: 50px;
+		height: 50px;
+	}
+
+
+	</style>
+	
+</head>
+<body>
+	<div class="outer">
+	<div class="cell">
+		<span class="span"></span>
+	</div>
+
+	<div class="cell">
+		<span class="span"></span>
+	</div>
+   </div>
+   
+	<span class="show"></span>
+
+	<div class="ch-black"></div>
+	<div class="ch-white"></div>
+	
+</body>
+<script>
+	var cell = document.querySelectorAll('.cell');
+	var span = document.querySelector('.show');
+	
+
+	var cellY = '25px';
+	var cellX = '25px';
+	var cellCountChild = 0;
+
+for (var i = 0; i < cell.length; i++) {
+	
+	cell[i].onclick = function(e) {
+		console.log(this);
+		//cell 50*50
+		//左上
+		if(e.offsetX < 25 && e.offsetY < 25) {
+			//第二象限
+			//棋子添加到左上角
+			//判断是哪一方出子 添加颜色类
+			addchess(this,'ch-black','leftup');
+			
+
+          //右上
+      }else if(e.offsetX > 25 && e.offsetY <25 ) {
+
+      	addchess(this,'ch-black','rightup');
+      	
+         //右下
+     }else if(e.offsetX > 25 && e.offsetY >25) {
+
+     	addchess(this,'ch-white','rightdown');
+     	
+         //左下
+     }else if(e.offsetX < 25 && e.offsetY > 25) {
+
+
+     	addchess(this,'ch-white','leftdown');
+     	
+
+     }else{
+
+     	console.log('彩蛋');
+     }
+
+     span.innerHTML +=' e.screenX '+e.screenX+' e.screenY '+e.screenY+'<br />';
+     span.innerHTML +=' e.clientX '+e.clientX+' e.clientY '+e.clientY+'<br />';
+     span.innerHTML +=' e.offsetX '+e.offsetX+' e.offsetY '+e.offsetY +'<br />';
+
+ }; //onclick end
+
+}//for end
+	function addchess(target,chessStyle,position) {
+		var chessouter = document.createElement('div');
+		var chessinner = document.createElement('div');
+			chessouter.className = 'chessouter ' + position ;
+
+			chessinner.className = chessStyle;
+			console.log('chessouter',chessouter);
+			console.log('chessinner',chessinner);
+			chessouter.appendChild(chessinner);
+
+			target.appendChild(chessouter);
+
+			chessouter.onclick = function(e) {
+				e.cancelBubble=true;
+			};
+			chessinner.onclick = function(e) {
+				e.cancelBubble=true;
+			};
+		return;
+	}
+
+</script>
+</html>
